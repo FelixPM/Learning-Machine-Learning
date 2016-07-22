@@ -2,7 +2,7 @@
 """
 import datetime
 import math
-
+import pickle
 import Quandl
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,13 +10,17 @@ from matplotlib import style
 from sklearn import preprocessing, cross_validation
 from sklearn.linear_model import LinearRegression
 
+
 style.use('ggplot')
 
 # import alphabet stocks data set into data frame
+# df = Quandl.get('WIKI/GOOGL')
+# with open('wiki_googl.pickle', 'wb') as file:
+#     pickle.dump(df, file)
+pickle_in = open('wiki_googl.pickle', 'rb')
+df = pickle.load(pickle_in)
+# file.close()
 
-print('break1')
-df = Quandl.get('WIKI/GOOGL')
-print('break2')
 # Grab desired features
 df = df[['Adj. Open', 'Adj. High', 'Adj. Low', 'Adj. Close', 'Adj. Volume']]
 
@@ -52,8 +56,14 @@ Y = np.array(df['label'])
 X_train, X_test, Y_train, Y_test = cross_validation.train_test_split(X, Y, test_size=0.2)
 
 # Fit classifier on train data
-clf = LinearRegression()
-clf.fit(X_train, Y_train)
+# clf = LinearRegression()
+# clf.fit(X_train, Y_train)
+#
+# # Save classifier as pickle
+# with open('linear_regression.pickle', 'wb') as file:
+#     pickle.dump(clf, file)
+pickle_in = open('linear_regression.pickle', 'rb')
+clf = pickle.load(pickle_in)
 
 # Test classifier on test data
 accuracy = clf.score(X_test, Y_test)
