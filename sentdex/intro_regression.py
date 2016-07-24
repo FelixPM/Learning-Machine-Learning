@@ -38,8 +38,8 @@ df.fillna(-99999, inplace=True)
 
 # set label to be forecast_col certain percent of data len
 
-forecast_out = int(math.ceil(0.01 * len(df)))
-print(forecast_out)
+forecast_out = int(math.ceil(0.1 * len(df)))
+# print(forecast_out)
 
 df['label'] = df[forecast_col].shift(-forecast_out)
 
@@ -47,7 +47,7 @@ df['label'] = df[forecast_col].shift(-forecast_out)
 X = np.array(df.drop(['label'], 1))
 X = preprocessing.scale(X)
 X_lately = X[-forecast_out:]
-X = X[:-forecast_out:]
+X = X[:-forecast_out]
 
 df.dropna(inplace=True)
 Y = np.array(df['label'])
@@ -69,7 +69,7 @@ clf = pickle.load(pickle_in)
 accuracy = clf.score(X_test, Y_test)
 
 forecast_set = clf.predict(X_lately)
-print(forecast_set, accuracy, forecast_out)
+# print(forecast_set, accuracy, forecast_out)
 
 df['Forecast'] = np.nan
 

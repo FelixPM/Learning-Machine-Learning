@@ -5,12 +5,23 @@ Find slope and intercept
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import style
+import random
 
 style.use('fivethirtyeight')
 
-# Points
-x = np.array([1, 2, 3, 4, 5, 6])
-y = np.array([5, 4, 6, 5, 6, 7])
+
+def create_dataset(how_many_points, variance, step=2, correlation='pos'):
+    val = 1
+    ys = []
+    for i in range(how_many_points):
+        yt = val + random.randrange(-variance, variance)
+        ys.append(yt)
+        if correlation and correlation == 'pos':
+            val += step
+        elif correlation and correlation == 'neg':
+            val -= step
+    xs = [i for i in range(len(ys))]
+    return np.array(xs, dtype=np.float64), np.array(ys, dtype=np.float64)
 
 
 def best_fit_slope_and_intercept(xs, ys):
@@ -48,11 +59,18 @@ def coefficient_of_determination(y_orig, y_line):
     return 1 - (square_error_regression / square_error_y_mean)
 
 
+# Points
+# x = np.array([1, 2, 3, 4, 5, 6])
+# y = np.array([5, 4, 6, 5, 6, 7])
+
+x, y = create_dataset(40, 10, 2, 'pos')
+
+# Fit and predict
 m, b = best_fit_slope_and_intercept(x, y)
 
 regression_line = np.array([(m * x1) + b for x1 in x])
 
-predict_x = 8
+predict_x = 45
 predict_y = m * predict_x + b
 
 r_squared = coefficient_of_determination(y, regression_line)
