@@ -1,9 +1,9 @@
-"""Classification example using sci-kit learn k-nearest
+"""Classification example using sci-kit learn svm
 """
 
 import pandas as pd
 import numpy as np
-from sklearn import cross_validation, neighbors
+from sklearn import cross_validation, svm
 
 # read data, replace missing values, drop useless id column
 df = pd.read_csv('breast-cancer-wisconsin.data')
@@ -17,8 +17,8 @@ y = np.array(df['class'])
 # split data
 x_train, x_test, y_train, y_test = cross_validation.train_test_split(x, y, test_size=0.2)
 
-# train and fit classifier using sci-kit k-neighbors
-clf = neighbors.KNeighborsClassifier()
+# train and fit classifier using sci-kit svm support vector classification
+clf = svm.SVC()
 clf.fit(x_train, y_train)
 
 # test accuracy
