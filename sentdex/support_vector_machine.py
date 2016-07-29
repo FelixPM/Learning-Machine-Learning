@@ -18,6 +18,17 @@ y = np.array(df['class'])
 x_train, x_test, y_train, y_test = cross_validation.train_test_split(x, y, test_size=0.2)
 
 # train and fit classifier using sci-kit svm support vector classification
+# Parameters:
+#     C: Penalty parameter C of the error term
+#     kernel:  ‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed’
+#     degree: Degree of the polynomial kernel function (‘poly’).
+#     gamma: Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’
+#     coef0: Independent term in kernel function
+#     probability: Whether to enable probability estimates.
+#                  This must be enabled prior to calling fit, and will slow down that method.
+#     shrinking, tol, cache_size, class_weight
+#     decision_function_shape : ‘ovo’, ‘ovr’ or None
+#     random_state
 clf = svm.SVC()
 clf.fit(x_train, y_train)
 
